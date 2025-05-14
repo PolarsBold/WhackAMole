@@ -3,14 +3,12 @@ import { createContext, useContext, useState } from "react";
 const GameContext = createContext();
 
 export function GameProvider({ children }) {
-  const initField = Array.from(
-    { length: 9 },
-    (_, i) => i === Math.floor(Math.random() * 9)
-  );
+  const rand = Math.floor(Math.random() * 9);
+
+  const initField = Array.from({ length: 9 }, (_, i) => i === rand);
   const [field, setField] = useState(initField);
-
   const [score, setScore] = useState(0);
-
+  const [isPlaying, setIsPlaying] = useState(false);
   const [highScore, setHighScore] = useState([]);
 
   const moleClick = () => {
@@ -23,8 +21,6 @@ export function GameProvider({ children }) {
     setScore(score + 1);
     setField(newField);
   };
-
-  const [isPlaying, setIsPlaying] = useState(false);
 
   const updateHighScore = () => {
     const newHighScore = [...highScore, score]
